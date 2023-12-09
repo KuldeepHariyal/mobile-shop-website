@@ -110,7 +110,16 @@ searchInput.addEventListener('input', () => {
 });
 const productsContainer = document.querySelector('.product-container');
 searchInput.addEventListener('focus', () => {
-    productsContainer.scrollIntoView({ behavior: 'smooth' });
+    const scrollOptions = {
+        top: productsContainer.offsetTop,
+        behavior: 'smooth',
+    };
+
+    if ('scrollBehavior' in document.documentElement.style) {
+        window.scrollTo(scrollOptions);
+    } else {
+        window.scrollTo(scrollOptions.top, scrollOptions.top);
+    }
 });
 
 const loader = document.querySelector(".preloader");
