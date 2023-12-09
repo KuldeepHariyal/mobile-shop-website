@@ -109,17 +109,21 @@ searchInput.addEventListener('input', () => {
     }
 });
 const productsContainer = document.querySelector('.product-container');
-searchInput.addEventListener('focus', () => {
-    const scrollOptions = {
-        top: productsContainer.offsetTop,
-        behavior: 'smooth',
-    };
+let isScrolling = false;
 
-    if ('scrollBehavior' in document.documentElement.style) {
-        window.scrollTo(scrollOptions);
-    } else {
-        window.scrollTo(scrollOptions.top, scrollOptions.top);
-    }
+searchInput.addEventListener('focus', () => {
+    isScrolling = true;
+    setTimeout(() => {
+        if (isScrolling) {
+            productsContainer.scrollIntoView({ behavior: 'smooth' });
+        }
+        isScrolling = false;
+    }, 300); // Adjust the delay (in milliseconds) as needed
+});
+
+// Handle blur event to stop scrolling if input loses focus
+searchInput.addEventListener('blur', () => {
+    isScrolling = false;
 });
 
 const loader = document.querySelector(".preloader");
